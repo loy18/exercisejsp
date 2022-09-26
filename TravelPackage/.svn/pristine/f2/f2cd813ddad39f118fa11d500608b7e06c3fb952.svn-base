@@ -1,0 +1,53 @@
+package kr.or.ddit.app.vehc.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.app.vehc.service.IVehcService;
+import kr.or.ddit.app.vehc.service.VehcServiceImpl;
+import kr.or.ddit.app.vehc.vo.VehcVO;
+
+@WebServlet("/vehc/delete.do")
+public class DeleteVehcController extends HttpServlet {
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String[] vehcIds = req.getParameterValues("vehcId");
+		
+		IVehcService vehcService = VehcServiceImpl.getInstance();
+		
+		for (String vehcId : vehcIds) {
+			VehcVO vh = vehcService.getVehc(vehcId);		
+			int cnt = vehcService.removeVehc(vehcId);
+		
+			String msg = "";
+			
+			if(cnt > 0) {
+				msg = "성공";
+			} else {
+				msg = "실패";
+			}
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("msg", msg);		
+			
+		}
+		
+		resp.getWriter().write("OK");	
+		
+//		String redirectUrl = req.getContextPath() + "/vehc/vehcList.do"; 
+//		resp.sendRedirect(redirectUrl);
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

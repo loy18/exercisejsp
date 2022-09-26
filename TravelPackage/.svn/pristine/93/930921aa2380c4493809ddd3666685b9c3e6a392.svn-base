@@ -1,0 +1,62 @@
+package kr.or.ddit.app.sch.service;
+
+import java.util.List;
+
+import kr.or.ddit.app.sch.dao.ISchDAO;
+import kr.or.ddit.app.sch.dao.SchDAOImpl;
+import kr.or.ddit.app.sch.vo.SchVO;
+
+
+public class SchServiceImpl implements ISchService {
+	private static ISchService SchService;
+	private ISchDAO SchDao;
+	
+	private SchServiceImpl() {
+		SchDao = SchDAOImpl.getInstance();
+	}
+	
+	public static ISchService getInstance() {
+		if(SchService == null) {
+			SchService = new SchServiceImpl();
+		}
+		return SchService;
+	}
+
+	@Override
+	public int registerSch(SchVO sv) {
+		int cnt = SchDao.insertSch(sv);
+		return cnt;
+	}
+
+	@Override
+	public int modifySch(SchVO sv) {
+		int cnt = SchDao.updateSch(sv);
+		return cnt;
+	}
+
+	@Override
+	public int removeSch(String schId) {
+		int cnt = SchDao.deleteSch(schId);
+		return cnt;
+	}
+
+	@Override
+	public SchVO getSch(String schId) {
+		SchVO trmv = SchDao.getSch(schId);
+		return trmv;
+	}
+
+	@Override
+	public List<SchVO> getAllSchList() {
+		List<SchVO> SchList = SchDao.getAllSchList();
+		return SchList;
+	}
+
+	@Override
+	public List<SchVO> searchList(SchVO sv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

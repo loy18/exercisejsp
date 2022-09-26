@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna">
+
+	<insert id="insertQna"
+		parameterType="kr.or.ddit.app.qna.vo.QnaVO">
+		INSERT INTO QNA(qna_no, qna_date, qna_TITLE, qna_CONT, qna_State, mem_mail)
+		VALUES(Qna_SEQ.NEXTVAL, SYSDATE, #{qnaTitle}, #{qnaCont}, #{qnaState},
+		#{memMail})
+	</insert>
+
+
+	<update id="updateQna">
+		update Qna
+		set Qna_date = SYSDATE
+		, Qna_TITLE = #{qnaTitle}
+		, Qna_CONT = #{qnaCont}
+		, Qna_State = #{qnaState}
+		, mem_mail = #{memMail} 
+		where qna_no = #{qnaNo}
+	</update>
+
+	<delete id="deleteQna" parameterType="String">
+		delete from qna where qna_no = #{aaaaaa}
+	</delete>
+
+
+	<resultMap type="kr.or.ddit.app.qna.vo.QnaVO" id="qnaMap">
+		<result property="qnaNo" column="qna_no" />
+		<result property="qnaDate" column="Qna_date" />
+		<result property="qnaTitle" column="Qna_TITLE" />
+		<result property="qnaCont" column="Qna_CONT" />
+		<result property="qnaState" column="Qna_State" />
+		<result property="memMail" column="mem_mail" />
+	</resultMap>
+	
+
+
+
+	<select id="qnaAllList" resultMap="qnaMap">
+		select *
+		from Qna order by qna_no desc
+	</select>
+	
+
+
+	<select id="qnaEachList" resultMap="qnaMap">
+		select *
+		from Qna
+		where mem_mail = #{mem_Mail}
+	</select>
+
+	<select id="getQna" parameterType="String" resultMap="qnaMap">
+		select *
+		from Qna
+		where qna_no = #{qnaNo}
+	</select>
+
+	<select id="searchList" parameterType="qnaVO" resultType="qnaVO">
+		select * from qna
+		where 1=1
+		<if test="qnaNo != null and qnaNo != ''">
+			and qna_no = #{qnaNo}
+		</if>
+		<if test="qnaTitle != null and qnaTitle != ''">
+			and Qna_title = #{qnaTitle}
+		</if>
+		<if test="qnaCont != null and qnaCont != ''">
+			and Qna_CONT = #{qnaCont}
+		</if>
+		<if test="qnaState != null and qnaState != ''">
+			and Qna_state = #{qnaState}
+		</if>
+	</select>
+
+</mapper>

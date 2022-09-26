@@ -1,0 +1,258 @@
+<%@page import="kr.or.ddit.app.notice.vo.NoticeVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<%
+List<NoticeVO> noticeList = (List<NoticeVO>) request.getAttribute("noticeList");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자주묻는질문</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-4">
+
+			<div id="category" class="col-2 b">
+				<script src="../notice/category.js"></script>
+			</div>
+			<div id="content" class="col-9 offset-1 b"
+				style="border: 1px solid lightgray;">
+				<h1>자주묻는질문</h1>
+				<hr>
+				<div class="accordion accordion-flush FAQ"
+					id="accordionFlushExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingOne">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+								aria-expanded="false" aria-controls="flush-collapseOne">
+								Q. 결제는 언제까지 해야 하나요?</button>
+						</h2>
+						<div id="flush-collapseOne" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingOne"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 항공권 결제는 예약 완료 후 예약 정보 내 결제시한 전까지 해주셔야 합니다. <br>
+								<code>경로 [마이페이지]>[예약 및 결제내역]</code>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingTwo">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+								aria-expanded="false" aria-controls="flush-collapseTwo">
+								Q. 방금 예약했는데 이미 결제시한이 지났다고 나옵니다.</button>
+						</h2>
+						<div id="flush-collapseTwo" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingTwo"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 항공사 결제시한이 임박한 경우, 이미 지난 시간으로 결제시한이 주어질 수 있습니다. 해당 경우
+								[1:1문의게시판]를 통해 결제시한 연장이 가능한지 확인 후 결제 부탁드립니다. 결제시한 연장이 불가하거나 혹은
+								업무시간 외에 생성된 예약은 사전 안내 없이 자동 취소될 수 있습니다.
+
+								<code> (업무시간 : 평일 09:00-17:00 / 주말 및 공휴일 제외)</code>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingThree">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+								aria-expanded="false" aria-controls="flush-collapseThree">
+								Q. 여러 명이 한 번에 예약한 경우 탑승자 중 1명의 카드로 전체 승객 결제가 가능한가요?</button>
+						</h2>
+						<div id="flush-collapseThree" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingThree"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 탑승자 1명의 카드로 전체 승객 결제 가능합니다.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingFour">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseFour"
+								aria-expanded="false" aria-controls="flush-collapseFour">
+								Q. 결제취소 후 마일리지 복원은 언제 되나요?</button>
+						</h2>
+						<div id="flush-collapseFour" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingFour"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 호텔 마일리지 결제 후, 예약 취소 시, 영업일 기준 1~3일 이내로 원복 처리되오니 참고 바랍니다. (주말
+								토/일/공휴일 제외) 관련문의는 [1:1문의게시판]를 통해 문의 부탁드립니다.
+								<code>(업무시간 : 평일 09:00-17:00 / 주말 및 공휴일 제외) </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingFive">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
+								aria-expanded="false" aria-controls="flush-collapseFive">
+								Q. 예약 건 취소하고 싶은데 어떻게 취소하나요?</button>
+						</h2>
+						<div id="flush-collapseFive" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingFive"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 취소 마감일(무료 취소 가능 시한)이 남아있는 경우,
+								<code>[마이페이지> 예약내역]에서 예약조회 후 직접 취소 처리 가능합니다. </code>
+								다만 취소 마감일이 지나 규정상 무료 취소가 불가한 경우, 예약번호와 함께 문의 부탁드립니다. 예약 취소 후 카드
+								환불은 영업일 기준 약 3~7일 소요 되며(카드사 영업일 기준), 자세한 환불 문의는 카드사로 문의해 주세요.
+								마일리지 환불은 영업일 기준 약 1~2일 소요되며, 상품권 환불은 담당자가 별도로 연락드립니다.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingSix">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseSix"
+								aria-expanded="false" aria-controls="flush-collapseSix">
+								Q. 결제 취소 후 환불절차는 어떻게 되나요?</button>
+						</h2>
+						<div id="flush-collapseSix" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingSix"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 일반적으로 현금의 경우 영업일 기준 2~3일, 카드의 경우 영업일 기준 3~4일 후에 환불 완료 됩니다. 간혹
+								카드사에 따라 환불시점에 차이가 있어 일주일 이상 소요될 수 있으니, 이런 경우 해당 카드사에 확인해 보시길
+								권해드립니다.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingSeven">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven"
+								aria-expanded="false" aria-controls="flush-collapseSeven">
+								Q. 객실을 미리 배정 받고 싶은데 가능한가요?</button>
+						</h2>
+						<div id="flush-collapseSeven" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingSeven"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 객실 배정은 현장 프론트에서 진행되기 때문에 미리 배정 받는 것은 어렵습니다.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingEight">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseEight"
+								aria-expanded="false" aria-controls="flush-collapseEight">
+								Q. 결제 전인데 예약변경은 어떻게 하나요?</button>
+						</h2>
+						<div id="flush-collapseEight" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingEight"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 모든 예약 건에 대한 변경 요청은
+								<code>[]1:1게시판] </code>
+								문의 후 가능합니다.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingNine">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseNine"
+								aria-expanded="false" aria-controls="flush-collapseNine">
+								Q. 예약은 어떻게 해야 하나요?</button>
+						</h2>
+						<div id="flush-collapseNine" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingNine"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 원하시는 상품을 검색 후 결제를 하면 예약을 진행하실 수 있습니다. 모두의 여행에서 제공하는 다양한 상품을
+								선택해 보세요. 상품 상세 일정표에서 기본 정보, 사용 방법과 같은 내용을 확인한 후, 원하는 상품의 타입을
+								선택하세요. 추가적 인원, 연령 등 상품 타입 내 옵션 사항들을 선택하고 총 결제 금액을 확인한 후 ‘예약하기’를
+								누르고 결제를 진행해주세요.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingTen">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseTen"
+								aria-expanded="false" aria-controls="flush-collapseTen">
+								Q. 결제는 어떻게 하나요?</button>
+						</h2>
+						<div id="flush-collapseTen" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingTen"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 결제는 국내 신용카드(카카오페이)만 이용 가능합니다. (무통장 입금 사용 불가) 외화로 등록된 상품의 경우,
+								환율에 따라 해당 상품의 가격이 변동될 수 있어 최초로 확인한 금액과 결제 금액이 상이할 수 있습니다.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingEleven">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven"
+								aria-expanded="false" aria-controls="flush-collapseEleven">
+								Q. 코로나바이러스19 관련 취소/환불 문의</button>
+						</h2>
+						<div id="flush-collapseEleven" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingEleven"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								Q. 코로나바이러스19 확진 판정받았습니다. 항공권 취소 시 수수료가 부과되나요? A. 코로나바이러스19 확진
+								판정관련하여 서류 검토 후 취소수수료 면제 가능여부 확인 가능합니다.
+
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingTwelve">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve"
+								aria-expanded="false" aria-controls="flush-collapseTwelve">
+								Q. 개인정보 열람,정정,삭제 어떻게 하나요?</button>
+						</h2>
+						<div id="flush-collapseTwelve" class="accordion-collapse collapse"
+							aria-labelledby="flush-headingTwelve"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								A. 고객님의 개인정보 열람 및 정정을 위해서는 [마이페이지> [개인정보]를 클릭하여 열람 또는 정정하실 수
+								있습니다.
+								<code> </code>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<%@include file="../Footer.jsp"%>

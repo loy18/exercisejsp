@@ -1,0 +1,26 @@
+package kr.or.ddit.app.schcomb.dao;
+
+import java.util.List;
+
+import kr.or.ddit.app.schcomb.vo.SchCombVO;
+
+public interface ISchCombDAO {
+	
+	// 등록
+	public int insertSchComb(SchCombVO scv);
+
+	// 수정
+	public int updateSchComb(SchCombVO scv);
+	
+	// 삭제
+	public int deleteSchComb(String schCombId);
+	
+	// 관광 정보 가져오기
+	public SchCombVO getSchComb(String schCombId);
+	
+	// 모든 리스트 
+	public List<SchCombVO> getAllSchCombList();
+	
+	// 검색 리스트
+	public List<SchCombVO> searchSchCombList(SchCombVO scv);
+}

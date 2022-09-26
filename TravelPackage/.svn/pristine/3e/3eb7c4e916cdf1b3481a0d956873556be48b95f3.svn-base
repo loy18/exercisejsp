@@ -1,0 +1,27 @@
+package kr.or.ddit.app.schcomb.service;
+
+import java.util.List;
+
+import kr.or.ddit.app.schcomb.vo.SchCombVO;
+
+
+public interface ISchCombService {
+
+	// Insert
+		public int registerSchComb(SchCombVO scv);
+		
+		// Update
+		public int modifySchComb(SchCombVO scv);
+		
+		// Delete
+		public int removeSchComb(String schId);
+		
+		// 정보 확인
+		public SchCombVO getSchComb(String schId);
+		
+		// 전체 정보 리스트
+		public List<SchCombVO> getAllSchCombList();
+		
+		// 검색 정보 리스트
+		public List<SchCombVO> searchList(SchCombVO scv);
+}

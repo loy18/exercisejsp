@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rsv">
+
+
+
+	<!--추가 -->
+	<insert id="insertRsv" parameterType="rsvVO">
+		INSERT INTO RSV
+		(RSV_ID, RSV_QTY, MEM_MAIL, COM_PKG_ID)
+		VALUES (
+		RSV_SEQ.NEXTVAL, #{rsvQty}, #{memMail} ,#{comPkgId})
+	</insert>
+
+	<!-- COM_PKG_ID조회 -->
+	<select id="selectComId" resultType="String" parameterType="comPkgVO">
+	 SELECT COM_PKG_ID
+	 FROM COM_PKG
+	 WHERE COM_PKG_DAY = #{comPkgDay} AND PKG_ID = #{pkgId}
+	
+	
+	</select>
+	<!--조회 -->
+	<select id="listRsv" resultType="rsvVO">
+		SELECT *
+		FROM 
+		RSV R inner JOIN COM_PKG C
+		ON R.COM_PKG_ID = C.COM_PKG_ID
+		inner JOIN PKG P
+		ON C.PKG_ID = P.PKG_ID
+		ORDER BY RSV_ID
+	</select>
+
+	<select id="listRsv2" parameterType="rsvVO" resultType="rsvVO">
+		SELECT *
+		FROM 
+		RSV R INNER JOIN COM_PKG C
+		ON R.COM_PKG_ID = C.COM_PKG_ID
+		INNER JOIN PKG P
+		ON C.PKG_ID = P.PKG_ID
+		WHERE MEM_MAIL = #{memMail}
+		ORDER BY 1
+	</select>
+
+	
+	<!--수정 -->
+	<update id="updateRsv" parameterType="rsvVO">
+	 	update RSV 
+	 	set RSV_STAT = '승인 완료' 
+	 	where COM_PKG_ID = #{comPkgId}
+	 	OR RSV_ID = #{rsvId}
+	 </update>
+
+	<update id="updateRsv2" parameterType="rsvVO">
+	 	update RSV 
+	 	set RSV_STAT = '예약 취소' 
+	 	where COM_PKG_ID = #{comPkgId}
+	 	OR RSV_ID = #{rsvId}
+	 </update>
+
+	<!--삭제 -->
+	 <delete id="deleteRsv" parameterType="String">
+	  delete from RSV
+	  where RSV_ID = #{rsvId}
+	  </delete> 
+</mapper>

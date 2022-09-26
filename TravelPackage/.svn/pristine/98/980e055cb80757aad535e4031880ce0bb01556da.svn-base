@@ -1,0 +1,27 @@
+package kr.or.ddit.app.sch.service;
+
+import java.util.List;
+
+import kr.or.ddit.app.sch.vo.SchVO;
+
+
+public interface ISchService {
+
+	// Insert
+		public int registerSch(SchVO sv);
+		
+		// Update
+		public int modifySch(SchVO sv);
+		
+		// Delete
+		public int removeSch(String schId);
+		
+		// 정보 확인
+		public SchVO getSch(String schId);
+		
+		// 전체 정보 리스트
+		public List<SchVO> getAllSchList();
+		
+		// 검색 정보 리스트
+		public List<SchVO> searchList(SchVO sv);
+}

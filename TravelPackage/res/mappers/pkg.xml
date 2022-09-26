@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pkg">
+
+	<insert id="insertPkg"
+		parameterType="pkgVO">
+		
+		INSERT INTO PKG(
+		PKG_ID
+		,PKG_NM
+		,PKG_CONT
+		,PKG_DAY
+		,PKG_PRI
+		,PKG_REG
+		,PKG_GUI
+		,PKG_MIN_TO
+		,PKG_MAX_TO
+		,PKG_RD
+		,PKG_WRT
+		,ATCH_FILE_ID
+		) VALUES(
+		PKG_SEQ.nextval
+		,#{pkgNm}
+		,#{pkgCont}
+		,#{pkgDay}
+		,#{pkgPri}
+		,#{pkgReg}
+		,#{pkgGui}
+		,#{pkgMinTo}
+		,#{pkgMaxTo}
+		,sysdate
+		,#{pkgWrt}
+		,#{atchFileId}
+		)
+		
+	</insert>
+
+	<select id="pkgList" resultType="pkgVO">
+		select *
+		from PKG
+		order by pkg_id desc
+	</select>
+	<select id="pkgList2" resultType="pkgVO">
+		select *
+		from PKG
+		order by pkg_id asc
+	</select>
+
+
+	<select id="getPkg" parameterType="String" resultType="pkgVO">
+		select *
+		from PKG
+		where PKG_ID = #{pkgId}
+	</select>
+
+	<update id="update" parameterType="pkgVO">
+		UPDATE PKG
+		SET PKG_NM = #{pkgNm}     
+		, PKG_CONT = #{pkgCont}    
+		, PKG_DAY = #{pkgDay}    
+		, PKG_PRI = #{pkgPri}    
+		, PKG_REG = #{pkgReg}    
+		, PKG_GUI = #{pkgGui}    
+		, PKG_MIN_TO = #{pkgMinTo}  
+		, PKG_MAX_TO = #{pkgMaxTo}  
+		, PKG_RD = sysdate      
+		, PKG_WRT = #{pkgWrt}    
+		, ATCH_FILE_ID = #{atchFileId}
+		WHERE
+		PKG_ID = #{pkgId}
+	</update>
+	
+	<update id="update2" parameterType="String">
+		 update rsv
+         set rsv_stat = '예약 취소'
+         where COM_PKG_ID = 1;
+	
+	</update>
+	<update id="update3" parameterType="String">
+		 update rsv
+         set rsv_stat = '예약 승인'
+         where COM_PKG_ID = 1;
+	
+	</update>
+
+
+	<delete id="delete" parameterType="String">
+			DELETE FROM PKG
+			WHERE Pkg_id = #{pkgId}
+	</delete>
+	
+	
+	<select id="search" parameterType="searchVO" resultType="pkgVO">
+		select * from PKG
+		 WHERE 1 = 1
+		 <if test="vehcComp != ''">
+			and pkg_id = (select max(pkg_id) from sch s,vehc v
+						where vehc_comp like '%' || #{vehcComp} || '%')
+		</if>
+		
+		
+		
+		<if test="search != ''">
+		 	and PKG_NM like '%' || #{search} || '%'
+		</if>
+		<if test="pkgDay != ''">
+			<if test="pkgDay == 4">
+				and PKG_DAY >= 3
+			</if>
+			and PKG_DAY = #{pkgDay}
+		</if>
+		
+		<if test="pkgPri != ''">
+			<if test="580000 == pkgPri">
+				and 580000 >= PKG_Pri
+			</if>			
+			<if test = "1150000 == pkgPri">
+				and PKG_Pri >= 580000
+				and 1150000 >= PKG_Pri
+			</if>
+			<if test = "pkgPri == 1720000">
+				and PKG_Pri >= 1150000
+				and 1720000 >= PKG_Pri
+			</if>
+			<if test = "pkgPri == 2300000">
+				and PKG_Pri >= 1720000
+				and 2300000 >= PKG_Pri
+			</if>
+			<if test = "pkgPri == 9999999">
+				and PKG_PRI >= 2300000
+			</if>
+		</if>
+		
+	</select>
+	
+	<resultMap type="kr.or.ddit.app.pkg.vo.DtPkgVO" id="dtPkgMap">
+		<result property="dtPkgNm" column="PKG_NM" />
+		<result property="dtPkgReg" column="PKG_REG" />
+		<result property="dtSchDay" column="SCH_DAY" />
+		<result property="dtAcmNm" column="ACM_NM" />
+		<result property="dtAcmSe" column="ACM_SE" />
+		<result property="dtAcmAddr" column="ACM_ADDR" />
+		<result property="dtAcmCont" column="ACM_CONT" />
+		<result property="dtVehcComp" column="VEHC_COMP" />
+		<result property="dtVehcSe" column="VEHC_SE" />
+		<result property="dtComPkgDay" column="COM_PKG_DAY" />
+		<result property="detailComFileSaveNm" column="ATCH_FILE_DE_SAV" />
+	</resultMap>
+	
+	<select id="dtSelectList" parameterType="String" resultMap="dtPkgMap">
+	
+		SELECT  P.PKG_NM
+		    ,   P.PKG_REG
+		    ,   S.SCH_DAY
+		    ,   A.ACM_NM
+		    ,   A.ACM_SE
+		    ,   A.ACM_ADDR
+		    ,   A.ACM_CONT
+		    ,   V.VEHC_COMP
+		    ,   V.VEHC_SE
+		    ,   C.COM_PKG_DAY
+		    ,   AT.ATCH_FILE_DE_SAV
+		FROM PKG P
+		INNER JOIN SCH S
+		ON P.PKG_ID = S.PKG_ID
+		INNER JOIN COM_PKG C
+		ON C.PKG_ID = P.PKG_ID
+		INNER JOIN ACM A
+		ON S.ACM_ID = A.ACM_ID
+		INNER JOIN VEHC V
+		ON S.VEHC_ID = V.VEHC_ID
+		INNER JOIN ATCH_DE AT
+		ON P.ATCH_FILE_ID = AT.ATCH_FILE_ID 	
+		WHERE P.PKG_ID = #{pkgID}
+		ORDER BY S.SCH_DAY ASC
+	
+	</select>
+	
+	<resultMap type="kr.or.ddit.app.pkg.vo.DetailTourVO" id="dtTourMap">
+		
+		<result property="dePkgDay" column="PKG_DAY"/>
+		<result property="deSchDay" column="SCH_DAY"/>
+		<result property="deTourNm" column="TOUR_NM"/>
+		<result property="deTourSe" column="TOUR_SE"/>
+		<result property="deTourAddr" column="TOUR_ADDR"/>
+		<result property="deTourMaxTo" column="TOUR_MAX_TO"/>
+		<result property="detailTourFileSaveNM" column="ATCH_FILE_DE_SAV"/>
+	
+	</resultMap>
+	
+	<select id="pkg.dtTourSelectList" parameterType="detailTourVO" resultMap="dtTourMap">
+	
+		SELECT  P.PKG_DAY
+		    ,   SC.SCH_DAY
+		    ,   T.TOUR_NM
+		    ,   T.TOUR_SE
+		    ,   T.TOUR_ADDR
+		    ,   T.TOUR_MAX_TO
+		    ,   AT.ATCH_FILE_DE_SAV
+		FROM PKG P
+		INNER JOIN SCH S
+		ON P.PKG_ID = S.PKG_ID
+		INNER JOIN SCH_COMB SC
+		ON S.PKG_ID = SC.PKG_ID 
+		AND S.SCH_DAY = SC.SCH_DAY
+		INNER JOIN TOUR T 
+		ON SC.TOUR_ID = T.TOUR_ID
+		INNER JOIN ATCH_DE AT
+		ON T.ATCH_FILE_ID = AT.ATCH_FILE_ID 
+		WHERE P.PKG_ID = #{dePkgId}
+		AND SC.SCH_DAY = #{deSchDay}
+	
+	</select>
+	
+	
+</mapper>

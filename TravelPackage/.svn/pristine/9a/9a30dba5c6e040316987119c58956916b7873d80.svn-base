@@ -1,0 +1,7 @@
+var v_body = document.querySelector('#category');
+v_body.innerHTML += `<nav class="nav flex-column">
+  <a class="nav-link active text-dark" aria-current="page" href="../notice/noticeList.do">공지사항</a>
+  <a class="nav-link text-dark" href="../notice/FAQList.jsp">자주묻는질문</a>
+  <a class="nav-link text-dark" href="../notice/QNAList.do">1:1문의</a>
+</nav>`;
+

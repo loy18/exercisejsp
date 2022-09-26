@@ -1,0 +1,141 @@
+package kr.or.ddit.app.sch.service;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.or.ddit.app.common.vo.AtchFileVO;
+import kr.or.ddit.app.prodpkg.service.IProdPkgService;
+import kr.or.ddit.app.prodpkg.service.ProdPkgServiceImpl;
+import kr.or.ddit.app.prodpkg.vo.ProdPkgVO;
+import kr.or.ddit.app.sch.dao.ISchDAO;
+import kr.or.ddit.app.sch.dao.SchDAOImpl;
+import kr.or.ddit.app.sch.vo.SchVO;
+import kr.or.ddit.app.schcomb.service.ISchCombService;
+import kr.or.ddit.app.schcomb.service.SchCombServiceImpl;
+import kr.or.ddit.app.schcomb.vo.SchCombVO;
+import kr.or.ddit.app.util.MyBatisUtil;
+
+
+public class SchServiceImpl implements ISchService {
+	private static ISchService SchService;
+	private ISchDAO SchDao;
+	
+	private SchServiceImpl() {
+		SchDao = SchDAOImpl.getInstance();
+	}
+	
+	public static ISchService getInstance() {
+		if(SchService == null) {
+			SchService = new SchServiceImpl();
+		}
+		return SchService;
+	}
+
+	@Override
+	public int registerSch(SchVO sv) {
+		
+		SqlSession session = MyBatisUtil.getInstance(false);
+		int cnt = 0;
+		try {
+			
+			cnt = SchDao.insertSch(session,sv);
+			ISchCombService schCombService = SchCombServiceImpl.getInstance();
+			IProdPkgService ppvService = ProdPkgServiceImpl.getInstance();
+			String[] tids = sv.getTourIds().split(";");
+			
+			for(int i=0; i< tids.length; i++) {
+				SchCombVO scv = new SchCombVO();
+				scv.setPkgId(sv.getPkgId());
+				scv.setSchDay(String.valueOf(sv.getSchDay()));
+				scv.setTourId(tids[i]);
+				schCombService.registerSchComb(session,scv);
+				
+				ProdPkgVO ppv = new ProdPkgVO();
+				ppv.setPkgId(sv.getPkgId());
+				ppv.setTourId(tids[i]);
+				ppvService.registerProdPkg(session, ppv);
+				
+			}
+			
+			
+			session.commit();	// 커밋
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public int modifySch(SchVO sv) {
+		
+		SqlSession session = MyBatisUtil.getInstance(true);
+		int cnt = 0;
+		
+		try {
+			cnt = SchDao.updateSch(session, sv);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int removeSch(SchVO sv) {
+		SqlSession session = MyBatisUtil.getInstance(true);
+		int cnt = 0;
+		
+		try {
+			cnt = SchDao.deleteSch(session, sv);
+			System.out.println("5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public SchVO getSchForDay(SchVO sv) {
+		SqlSession session = MyBatisUtil.getInstance(true);
+		SchVO schVo = null;
+		
+		try {
+			schVo = SchDao.getSchForDay(session, sv);
+		} finally {
+			session.close();
+		}
+		return schVo;
+	}
+
+	@Override
+	public List<SchVO> getSchList(String pkgId) {
+		SqlSession session = MyBatisUtil.getInstance(true);
+		List<SchVO> schList = null;
+		
+		try {
+			schList = SchDao.getSchList(session, pkgId);
+		} finally {
+			session.close();
+		}
+		return schList;
+	}
+
+	public List<String> getTourList(SchVO sv){
+		SqlSession session = MyBatisUtil.getInstance(true);
+		List<String> tourList = null;
+		
+		try {
+			tourList = SchDao.getTourList(session, sv);
+		} finally {
+			session.close();
+		}
+		return tourList;
+	}
+	
+}

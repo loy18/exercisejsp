@@ -1,0 +1,63 @@
+package kr.or.ddit.app.schcomb.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.or.ddit.app.schcomb.vo.SchCombVO;
+import kr.or.ddit.app.util.MyBatisUtil;
+
+public class SchCombDAOImpl implements ISchCombDAO {
+	private static ISchCombDAO schCombDao;
+	
+	private SqlSession sqlSession;
+	
+	private SchCombDAOImpl() {
+		sqlSession = MyBatisUtil.getInstance(true);
+	}
+	
+	public static ISchCombDAO getInstance() {
+		if(schCombDao == null) {
+			schCombDao = new SchCombDAOImpl();
+		}
+		return schCombDao;
+	}
+	
+	
+	@Override
+	public int insertSchComb(SchCombVO scv) {
+		int cnt = sqlSession.insert("schComb.insertSchComb", scv);
+		return cnt;
+	}
+
+	@Override
+	public int updateSchComb(SchCombVO scv) {
+		int cnt = sqlSession.update("schComb.update",scv);
+		return cnt;
+	}
+
+	@Override
+	public int deleteSchComb(String schCombId) {
+		int cnt = sqlSession.delete("schComb.delete", schCombId);
+		return cnt;
+	}
+
+	@Override
+	public SchCombVO getSchComb(String schCombId) {
+		SchCombVO schCombVO = sqlSession.selectOne("schComb.getSchComb", schCombId);
+		return schCombVO;
+	}
+
+	@Override
+	public List<SchCombVO> getAllSchCombList() {
+		List<SchCombVO> schCombList = sqlSession.selectList("schComb.schCombList");
+		return schCombList;
+	}
+
+	@Override
+	public List<SchCombVO> searchSchCombList(SchCombVO scv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

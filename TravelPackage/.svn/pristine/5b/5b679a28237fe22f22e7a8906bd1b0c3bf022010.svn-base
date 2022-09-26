@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!DOCTYPE html>
+<html>
+<style>
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: blue;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+	text-decoration: underline;
+}
+
+a:active {
+	color: green;
+	text-decoration: none;
+}
+
+.b {
+	border: 1px solid black;
+}
+h5{
+padding-right : 10px;
+padding-top : 10px;
+padding-bottom : 10px;
+}
+</style>
+<head>
+<meta charset="UTF-8">
+<title>공지사항메인</title>
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="row mt-4 b">
+			<div id="category" class="col-2 b">
+				<script src="../notice/category.js"></script>
+			</div>
+
+			<div class="col-9 offset-1 b">
+				<div class="row b">
+					<div class="col-md-7 b">
+						<h4 style="padding:15px;">
+							모두의여행 <span style="color: blue">고객센터</span> 입니다 무엇을 도와드릴까요?
+						</h4>
+						<form class="col-12 col-lg-5 mb-3 mb-lg-0 d-flex align-items">
+							<input type="search" class="form-control"
+								style="display: inline-block; border: 3px solid black; width:600px;"
+								placeholder="검색어를 입력하세요.">
+							<button type="submit" class="btn">
+								<img src="/TravelPackage/image/search.png" width="20"
+									height="20">
+							</button>
+						</form>
+						
+					</div>
+					<div class="col-md-5 b">
+						<h5>1:1게시판</h5>
+						<h7>문의 궁금하신 사항을 남겨주세요</h7>
+						<br>
+						<button onclick="location.href='#';" type="button"
+							class="btn btn-outline-dark ">문의내역 확인</button>
+						<button onclick="location.href='../notice/noticeInsert.do';"
+							type="button" class="btn btn-outline-primary ">1:1문의하기</button>
+						<hr>
+						<div>
+							<h5>공지사항</h5>
+							<button onclick="location.href='../notice/noticeList.do';"
+								type="button" class="btn btn-outline-dark ">더보기</button>
+							<hr>
+						</div>
+						<div style="backGround-color:lightgray">
+						<h5>모두의여행 대표전화</h5>
+						<h5>1588-1588</h5>
+						</div>
+						<hr>
+						<div style="backGround-color:lightgray">
+						<h5>해외 항공권 문의</h5>
+						<h5>1588-1588</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
+<%@include file="../Footer.jsp"%>

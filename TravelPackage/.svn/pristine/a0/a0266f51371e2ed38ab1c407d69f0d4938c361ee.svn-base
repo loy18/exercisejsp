@@ -1,0 +1,138 @@
+<%@page import="kr.or.ddit.app.tour.vo.TourVO"%>
+<%@page import="kr.or.ddit.app.vehc.vo.VehcVO"%>
+<%@page import="kr.or.ddit.app.notice.vo.NoticeVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+
+<%
+List<VehcVO> vehcList = (List<VehcVO>) request.getAttribute("adminList");
+List<NoticeVO> noticeList = (List<NoticeVO>) request.getAttribute("noticeList");
+%>
+
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="row mt-4">
+			<div id="category" class="col-2">
+				<script src="../admin/category.js"></script>
+			</div>
+
+			<div class="col-9 offset-1">
+
+				
+       
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="card-header">
+            예약관리
+          </div>
+            <div class="card-body">
+ 
+            
+            
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card-header">
+              상품관리
+            </div>
+              <div class="card-body">
+              	<table class="table table-hover">
+              		<tr>
+						<th scope="col">ID</th>
+						<th scope="col">교통수단 회사명</th>
+						<th scope="col">구분</th>
+						<th scope="col">교통수단명</th>
+						<th scope="col">가격</th>
+					</tr>
+					<%
+					int vehcSize = vehcList.size();
+					if (vehcSize > 0) {
+						for (int i = 0; i < vehcSize; i++) {
+						%>
+						<tr>
+							<td><%=vehcList.get(i).getVehcId()%></td>
+							<td><%=vehcList.get(i).getVehcComp()%></td>
+							<td><%=vehcList.get(i).getVehcSe()%></td>
+							<td><%=vehcList.get(i).getVehcNm()%></td>
+							<td><%=vehcList.get(i).getVehcdp()%></td>
+						</tr><%
+						}
+					} else {
+					%>
+					<tr>
+						<td colspan="6">교통수단 정보가 없습니다.</td>
+					</tr>
+					<%
+					}
+					%>
+                </table>
+                <a href="/TravelPackage/acm/AcmList.do" class="btn btn-primary">Go somewhere</a>
+              </div>
+          </div>
+
+          <div class="col-6 b">
+            <div class="card-header">
+              고객센터 관리
+            </div>
+              <div class="card-body">
+
+					<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th scope="col">글번호</th>
+							<th scope="col">제목</th>
+							<th scope="col">작성자</th>
+							<th scope="col">문의답변 상태</th>
+							<th scope="col">작성일</th>
+						</tr>
+					</thead>
+					<%
+						for (int i = 0; i < 5; i++) {
+							if (noticeList.get(i).getNoticeSe().equals("1:1문의")) {
+					%>
+					<tr>
+						<td><%=noticeList.get(i).getNoticeId()%></td>
+						<td><%=noticeList.get(i).getNoticeTitle()%></td>
+						<td><%=noticeList.get(i).getNoticeWrt()%></td>
+						<td>
+							<!-- 문의 답변 상태 -->
+						</td>
+						<td><%=noticeList.get(i).getNoticeRd()%></td>
+					</tr>
+					<%
+					}
+					}
+					%>
+				</table>
+
+
+                <a href="/TravelPackage/admin/adminNotice.do" class="btn btn-primary">Go somewhere</a>
+              </div>
+          </div>
+          
+      </div>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+
+</html>
+<%@include file="../Footer.jsp"%>

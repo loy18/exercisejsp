@@ -1,0 +1,26 @@
+package kr.or.ddit.app.sch.dao;
+
+import java.util.List;
+
+import kr.or.ddit.app.sch.vo.SchVO;
+
+public interface ISchDAO {
+	
+	// 등록
+	public int insertSch(SchVO sv);
+
+	// 수정
+	public int updateSch(SchVO sv);
+	
+	// 삭제
+	public int deleteSch(String schId);
+	
+	// 관광 정보 가져오기
+	public SchVO getSch(String schId);
+	
+	// 모든 리스트 
+	public List<SchVO> getAllSchList();
+	
+	// 검색 리스트
+	public List<SchVO> searchSchList(SchVO sv);
+}

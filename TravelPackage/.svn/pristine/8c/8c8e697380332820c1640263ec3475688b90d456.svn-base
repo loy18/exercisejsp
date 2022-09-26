@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comPkg">
+
+	<insert id="insertComPkg"
+		parameterType="comPkgVO">
+		
+		INSERT INTO COM_PKG(
+		COM_PKG_DAY
+		,COM_PKG_ID
+		,PKG_ID
+		,COM_PKG_RD
+		,COM_PKG_WRT
+		) VALUES(
+		#{comPkgDay}
+		,COM_PKG_SEQ.nextval
+		,#{pkgId}
+		,sysdate
+		,#{comPkgWrt}
+		)
+		
+	</insert>
+
+	<select id="comPkgList" resultType="comPkgVO" flushCache="true">
+	SELECT
+    TO_CHAR(cp.com_pkg_day,'YY-MM-DD') com_pkg_day,
+    cp.com_pkg_id,
+    cp.pkg_id,
+    TO_CHAR(cp.com_pkg_rd,'YY-MM-DD') com_pkg_rd,
+    nvl(r.rsv_stat,'대기중') rsv_stat,
+    cp.com_pkg_wrt,
+    nvl(COUNT(r.rsv_stat),0)
+    || '명/'
+    || p.pkg_max_to
+    || '명' pkg_count
+FROM
+    com_pkg cp
+    full outer JOIN rsv r ON cp.com_pkg_id = r.com_pkg_id
+    INNER JOIN pkg p ON cp.pkg_id = p.pkg_id
+WHERE
+    cp.pkg_id = #{pkgId} 
+GROUP BY
+    com_pkg_day,
+    cp.com_pkg_id,
+    cp.pkg_id,
+    com_pkg_rd,
+    r.rsv_stat,
+    cp.com_pkg_wrt,
+    p.pkg_max_to
+ORDER BY com_pkg_day
+	</select>
+
+
+
+	<delete id="delete" parameterType="comPkgVO">
+		DELETE FROM COM_PKG
+		WHERE COM_PKG_ID = #{comPkgId}
+	</delete>
+</mapper>

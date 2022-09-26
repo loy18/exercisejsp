@@ -1,0 +1,29 @@
+package kr.or.ddit.app.rsv.service;
+
+import java.util.List;
+
+import kr.or.ddit.app.compkg.vo.ComPkgVO;
+import kr.or.ddit.app.rsv.vo.RsvVO;
+
+public interface IRsvService {
+	
+	//insert
+	public int registerRsv(RsvVO rv);
+	
+	// Update
+	public int modifyRsv(RsvVO rv);
+	
+	public int modifyRsv2(RsvVO rv);
+	
+	
+	// Delete
+	public int removeRsv(String RsvId);
+	
+	// 전체 정보 리스트
+	public List<RsvVO> getAllRsvList();
+	
+	public List<RsvVO> getRsvList(RsvVO rv);
+	
+	public String getComPkgId(ComPkgVO cpv);
+	
+}

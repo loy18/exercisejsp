@@ -1,0 +1,190 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@include file ="../Header.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="SignUp.css">
+<link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+	<form action="<%= request.getContextPath() %>/signUp.do" method="POST" class="joinForm container" id="signUp">
+      <div class="row">   
+      	 <div class="col-6 offset-3">                                                                               
+		      <h2>회원가입</h2>
+		      <div id="mailC" class="textForm" style="text-align: left;">
+		        <input name="memMail" type="text" id="mail" class="id" placeholder="아이디">
+		        <input type="button" value="중복확인" onclick="checkId()"><br>
+		      </div>
+		      <div id="certificationNum" style="text-align: left;">
+		      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="idResult" style="font-size:13px;color:blue">아이디를 입력해주세요.</span>
+		      </div>
+		      <div id="cerInput">
+		      
+		      </div>
+		      <div class="textForm">
+		        <input id="pw" name="memPw" type="password" class="pw" placeholder="비밀번호" onkeyup="comparePwd()">
+		      </div>
+		       <div id="pwC" class="textForm">
+		        <input id="ckPw" name="memPwConfirm" type="password" class="pw" placeholder="비밀번호 확인" onkeyup="comparePwd()"><br>
+		      </div>
+		      <div style="text-align: left;">
+		      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="pwResult" style="font-size:13px;color:blue">비밀번호를 입력해주세요.</span>
+		      </div>
+		      <div class="textForm">
+		        <input name="memNm" type="text" class="name" placeholder="이름">
+		      </div>
+		       <div class="textForm">
+		        <input name="memBir" type="date" class="bir" placeholder="생년월일">
+		      </div>
+		      <div class="textForm">
+		        <input name="memTel" type="text" class="tel" placeholder="전화번호">
+		      </div>
+		      	<div style="text-align: left;">
+			      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      	<input type="text" id="sample4_postcode" placeholder="우편번호">
+					<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+				</div>
+		      <div id="addr" class="textForm">
+			
+					<input type="text" name="memAddr1" id="sample4_roadAddress" placeholder="도로명주소">
+					<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+					<span id="guide" style="color:#999;display:none"></span><br>
+					<input type="text" name="memAddr2" id="sample4_detailAddress" placeholder="상세주소">
+					<input type="text" name="memAddr3" id="sample4_extraAddress" placeholder="참고항목">
+			      	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		      	
+		      </div>
+		      <div class="textForm">
+		        <input name="memPreReg" type="text" class="nickname" placeholder="선호지역">
+		      </div>
+		      <input type="button" id="btnSubmit" class="btnSu" value="회원가입" onclick="checkForm()"/>
+		      <!-- <button id="btnSubmit" class="btn" onclick="joinMember()">회원가입</button> -->
+		      <div class="col-3"></div>
+	      </div>
+      </div> 
+	</form>
+<script>
+	function checkId() {
+		let idResult = $("#idResult");
+		let id = $("#mail").val();
+		let idCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		let certificationNum = $("#certificationNum");
+		if(!idCheck.test(id)){
+			alert("아이디는 이메일 형식을 사용해야 합니다.");
+			return false;
+		}
+		
+		$.ajax({
+			type:"get",
+			url:"<%=request.getContextPath()%>/idCheck.do",
+			data:"check=" +  $("#mail").val(),
+			dataType:"text",
+			success:function(p_rslt){
+				console.log(p_rslt);
+				if(p_rslt == "OK"){
+					//alert("사용할 수 있는 아이디입니다.");
+					// 인증번호 박스와 버튼 쌓이지 않게 삭제
+					$("#cNum").eq(0).remove();
+					$("#bNum").eq(0).remove();
+					$("#cerCfm").remove();
+					
+					idResult.css("color","blue");
+					idResult.html("사용가능한 아이디입니다.");
+					
+					// 인증번호 박스와 버튼 생성
+					//certificationNum.append("<input type=text id=cNum>");
+					//certificationNum.append("<input type=button id=bNum value=인증번호전송>");
+					$("#cerInput").append("<input type=text id=cNum placeholder=인증번호입력>");
+					$("#cerInput").append("<input type=button id=bNum value=인증번호전송>");
+					$("#bNum").css("width","100px");
+					
+					let arr = new Uint32Array(1);
+					let crypto = window.crypto || window.webkitCrypto || window.mozCrypto || window.oCrypto || window.msCrypto;
+					window.crypto.getRandomValues(arr);
+					let sRanNum = arr[0];
+
+
+					$("#bNum").click(function cerCfm() {
+						$("#cerInput").append("<input type=button id=cerCfm value=인증번호확인>");
+						$("#bNum").remove();
+						eMailCheck(sRanNum);
+					});
+					
+					
+					
+					
+					// $("#bNum").click(function cBtn() {
+					// 	$("#cerInput").append("<input type=button id=cerCfm value=인증번호확인>");
+					// 	$("#cerCfm").click(function cerCfm() {
+					// 		eMailCheck();
+					// 	});
+					// })
+				}else {
+					//alert("사용할 수 없는 아이디입니다.");
+					idResult.css("color","red");
+					idResult.html("이미 존재하는 아이디입니다.");
+					// 인증번호 박스와 버튼 삭제
+					$("#cNum").eq(0).remove();
+					$("#bNum").eq(0).remove();
+					
+				}
+			},
+			error: function (request, status, error) {
+		        console.log("code: " + request.status)
+		        console.log("message: " + request.responseText)
+		        console.log("error: " + error);
+		    }
+		})	
+	}
+
+	function eMailCheck(sRanNum) {
+		// let arr = new Uint32Array(1);
+        // let crypto = window.crypto || window.webkitCrypto || window.mozCrypto || window.oCrypto || window.msCrypto;
+        // window.crypto.getRandomValues(arr);
+        // let sRanNum = arr[0];
+		
+		$.ajax({
+			type:"post",
+			url:"<%=request.getContextPath()%>/eMailCheck.do",
+			data:{	"cerNum": sRanNum,
+					"mail":	$("#mail").val()
+			},
+			dataType:"text",
+			success:function(eqNum){
+				if(eqNum == "OK"){
+					alert("인증번호 전송이 완료되었습니다.");
+					let cerCfm = $("#cerCfm");
+					cerCfm.click(function cerLast() {
+						if(sRanNum == $("#cNum").val()){
+							alert("인증번호가 일치합니다.");
+							$("#cNum").attr("disabled",true);
+							$("#cerCfm").remove();
+						}else {
+							console.log($("#cNum").val());
+							alert("인증번호를 다시 확인해주세요.");
+						}
+					})
+				}else{
+					alert("이메일 전송에 오류가 생겼습니다. 관리자에게 문의해주세요.");
+				}
+				//cerConfirm(eqNum);
+			},
+			error: function (request, status, error) {
+		        console.log("code: " + request.status)
+		        console.log("message: " + request.responseText)
+		        console.log("error: " + error);
+			}
+		})
+	}	
+	
+</script>
+<script src="SignUp.js"></script>
+</body>
+</html>
+<%@include file ="../Footer.jsp" %>
+
+

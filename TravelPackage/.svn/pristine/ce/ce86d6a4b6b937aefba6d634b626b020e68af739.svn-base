@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch">
+
+	<insert id="insertSch"
+		parameterType="schVO">
+		
+		INSERT INTO SCH(
+		SCH_ID
+		,SCH_NM
+		,SCH_DAY
+		,SCH_PRI
+		,SCH_REG
+		,SCH_GUI
+		,SCH_MIN_TO
+		,SCH_MAX_TO
+		,SCH_RD
+		,SCH_WRT
+		,ATCH_FILE_ID
+		) VALUES(
+		SCH_SEQ.nextval
+		,#{schNm}
+		,#{schDay}
+		,#{schPri}
+		,#{schReg}
+		,#{schGui}
+		,#{schMinTo}
+		,#{schMaxTo}
+		,sysdate
+		,#{schWrt}
+		,#{atchFileId}
+		)
+		
+	</insert>
+
+	<select id="schList" resultType="schVO">
+		select *
+		from SCH
+	</select>
+
+
+	<select id="getSch" parameterType="String" resultType="schVO">
+		select *
+		from SCH
+		where Sch_id = #{schId}
+	</select>
+
+	<update id="update" parameterType="schVO">
+		UPDATE SCH
+		SET SCH_NM = #{schNm}     
+		, SCH_DAY = #{schDay}    
+		, SCH_PRI = #{schPri}    
+		, SCH_REG = #{schReg}    
+		, SCH_GUI = #{schGui}    
+		, SCH_MIN_TO = #{schMinTo}  
+		, SCH_MAX_TO = #{schMaxTo}  
+		, SCH_RD = sysdate      
+		, SCH_WRT = #{schWrt}    
+		, ATCH_FILE_ID = #{atchFileId}
+		WHERE
+		SCH_ID = #{schId}
+	</update>
+
+
+	<delete id="delete" parameterType="String">
+			DELETE FROM Sch
+			WHERE Sch_id = #{schId}
+	</delete>
+</mapper>

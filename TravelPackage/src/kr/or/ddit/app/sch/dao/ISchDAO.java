@@ -1,0 +1,29 @@
+package kr.or.ddit.app.sch.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.or.ddit.app.sch.vo.SchVO;
+
+public interface ISchDAO {
+	
+	// 등록
+	public int insertSch(SqlSession session, SchVO sv);
+
+	// 수정
+	public int updateSch(SqlSession session, SchVO sv);
+	
+	// 삭제
+	public int deleteSch(SqlSession session, SchVO sv);
+	
+	// 일정 정보 가져오기
+	public SchVO getSchForDay(SqlSession session, SchVO sv);
+	
+	// 모든 리스트 
+	public List<SchVO> getSchList(SqlSession session, String pkgId);
+	
+	// 패키지, 날의 관광상품 리스트
+	public List<String> getTourList(SqlSession session, SchVO sv);
+	
+}

@@ -1,0 +1,43 @@
+<!-- 지우고 IMPORT 삽입 -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row mt-4 b">
+			<div id="category" class="col-2 b">
+				<script src="./category.js"></script>
+			</div>
+
+			<div class="col-9 offset-1 b">
+			<h3>품목별 매출 현황</h3>
+			<hr>
+				<div class="col-3 offset-1" style="margin-left: 0px;">
+					<select onchange="if(this.value) location.href=(this.value);"
+						class="form-select" aria-label="Default select example">
+						<option value="1">선택하세요</option>
+						<option value="#">패키지상품</option>
+						<option value="#">관광상품</option>
+						<option value="#">운송수단</option>
+						<option value="#">숙박업소</option>
+					</select>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+<%@include file="../Footer.jsp"%>

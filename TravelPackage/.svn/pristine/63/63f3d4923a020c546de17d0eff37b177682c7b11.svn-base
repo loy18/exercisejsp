@@ -1,0 +1,63 @@
+package kr.or.ddit.app.sch.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.or.ddit.app.sch.vo.SchVO;
+import kr.or.ddit.app.util.MyBatisUtil;
+
+public class SchDAOImpl implements ISchDAO {
+	private static ISchDAO schDao;
+	
+	private SqlSession sqlSession;
+	
+	private SchDAOImpl() {
+		sqlSession = MyBatisUtil.getInstance(true);
+	}
+	
+	public static ISchDAO getInstance() {
+		if(schDao == null) {
+			schDao = new SchDAOImpl();
+		}
+		return schDao;
+	}
+	
+	
+	@Override
+	public int insertSch(SchVO sv) {
+		int cnt = sqlSession.insert("sch.insertSch", sv);
+		return cnt;
+	}
+
+	@Override
+	public int updateSch(SchVO sv) {
+		int cnt = sqlSession.update("sch.update",sv);
+		return cnt;
+	}
+
+	@Override
+	public int deleteSch(String schId) {
+		int cnt = sqlSession.delete("sch.delete", schId);
+		return cnt;
+	}
+
+	@Override
+	public SchVO getSch(String schId) {
+		SchVO schVO = sqlSession.selectOne("sch.getSch", schId);
+		return schVO;
+	}
+
+	@Override
+	public List<SchVO> getAllSchList() {
+		List<SchVO> schList = sqlSession.selectList("sch.schList");
+		return schList;
+	}
+
+	@Override
+	public List<SchVO> searchSchList(SchVO sv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

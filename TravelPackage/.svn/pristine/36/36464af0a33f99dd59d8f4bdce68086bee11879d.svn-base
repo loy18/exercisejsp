@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pkg">
+
+	<insert id="insertPkg"
+		parameterType="pkgVO">
+		
+		INSERT INTO PKG(
+		PKG_ID
+		,PKG_NM
+		,PKG_DAY
+		,PKG_PRI
+		,PKG_REG
+		,PKG_GUI
+		,PKG_MIN_TO
+		,PKG_MAX_TO
+		,PKG_RD
+		,PKG_WRT
+		,ATCH_FILE_ID
+		) VALUES(
+		PKG_SEQ.nextval
+		,#{pkgNm}
+		,#{pkgDay}
+		,#{pkgPri}
+		,#{pkgReg}
+		,#{pkgGui}
+		,#{pkgMinTo}
+		,#{pkgMaxTo}
+		,sysdate
+		,#{pkgWrt}
+		,#{atchFileId}
+		)
+		
+	</insert>
+
+	<select id="pkgList" resultType="pkgVO">
+		select *
+		from PKG
+	</select>
+
+
+	<select id="getPkg" parameterType="String" resultType="pkgVO">
+		select *
+		from PKG
+		where PKG_ID = #{pkgId}
+	</select>
+
+	<update id="update" parameterType="pkgVO">
+		UPDATE PKG
+		SET PKG_NM = #{pkgNm}     
+		, PKG_DAY = #{pkgDay}    
+		, PKG_PRI = #{pkgPri}    
+		, PKG_REG = #{pkgReg}    
+		, PKG_GUI = #{pkgGui}    
+		, PKG_MIN_TO = #{pkgMinTo}  
+		, PKG_MAX_TO = #{pkgMaxTo}  
+		, PKG_RD = sysdate      
+		, PKG_WRT = #{pkgWrt}    
+		, ATCH_FILE_ID = #{atchFileId}
+		WHERE
+		PKG_ID = #{pkgId}
+	</update>
+
+
+	<delete id="delete" parameterType="String">
+			DELETE FROM Pkg
+			WHERE Pkg_id = #{pkgId}
+	</delete>
+</mapper>

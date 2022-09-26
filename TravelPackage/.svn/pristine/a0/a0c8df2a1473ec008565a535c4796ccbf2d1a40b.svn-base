@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mem">
+
+	<insert id="insertMem" parameterType="memVO">
+		INSERT INTO MEM
+
+		(MEM_MAIL,
+		MEM_PW, MEM_NM, MEM_BIR, MEM_TEL, MEM_ADDR, MEM_PRE_REG)
+		VALUES (
+		#{memMail}, #{memPw}, #{memNm}, #{memBir}, #{memTel}, #{memAddr},
+		#{memPreReg})
+
+	</insert>
+	
+	<select id="idCheck" parameterType="String" resultType="String">
+	
+		SELECT MEM_MAIL
+		FROM MEM
+		WHERE MEM_MAIL = #{MEM_MAIL}
+	
+	</select>
+	
+	<update id="updatePw" parameterType="memVO">
+	
+		UPDATE MEM SET MEM_PW = #{memPw} WHERE MEM_MAIL = #{memMail}
+	
+	</update>
+	
+	
+	<update id="updateInfo" parameterType="memVO">
+	
+		UPDATE MEM 
+		SET MEM_PW = #{memPw}, MEM_NM = #{memNm}, 
+			MEM_TEL = #{memTel}, MEM_ADDR = #{memAddr},
+			MEM_PRE_REG = #{memPreReg} 
+		WHERE MEM_MAIL = #{memMail}
+	
+	</update>
+	
+	<select id="changeInfoCheck" parameterType="String" resultType="String">
+	
+		SELECT MEM_PW
+		FROM MEM
+		WHERE MEM_MAIL = #{MEM_MAIL}
+		
+	</select>
+	
+	<select id="memberList" resultType="memVO">
+	
+		SELECT * 
+		FROM MEM
+	
+	</select>
+	
+	<delete id="deleteMem" parameterType="String">
+	
+		DELETE FROM MEM 
+		WHERE MEM_MAIL IN (#{memMail})
+	
+	</delete>
+	
+	<delete id="delMem" parameterType="String">
+	
+		DELETE FROM MEM 
+		WHERE MEM_MAIL = #{memMail}
+	
+	</delete>
+	
+	<!-- 로그인 아이디 있는지 체크 -->
+	<select id="selectMem" parameterType="memVO" resultType="memVO">
+		select
+		*
+		from mem
+		where mem_mail = #{memMail}
+	</select>
+
+	<select id="searchId" parameterType="memVO" resultType="memVO">
+		select *
+		from MEM
+		where MEM_NM = #{memNm}
+		and MEM_TEL = #{memTel}
+
+	</select>
+
+	<select id="searchPw" parameterType="memVO" resultType="memVO">
+		select *
+		from MEM
+		where mem_mail = #{memMail}
+		and MEM_TEL = #{memTel}
+
+	</select>
+
+</mapper>

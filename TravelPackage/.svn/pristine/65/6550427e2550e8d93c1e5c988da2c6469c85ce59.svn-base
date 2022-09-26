@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>공지사항 등록</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-4">
+			<div id="category" class="col-2">
+				<script src="./category.js"></script>
+			</div>
+			<div id="content" class="col-9 offset-1">
+
+				<h1>고객센터 게시물 등록</h1>
+				<hr>
+				<form style="border: 1px solid lightgray;" action="noticeInsert.do"
+					method="post" enctype="multipart/form-data">
+
+					<div class="row">
+
+						<div class="col-md-1 ">
+							<label for="exampleFormControlInput1" class="form-label"></label>
+							<select class="btn btn-secondary" name="noticeSe">
+								<option value="공지사항">공지사항</option>
+								<option value="1:1문의">1:1문의</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-md-1 b">
+						<label for="exampleFormControlInput1" class="form-label"></label>
+						<input name="noticeWrt" type="text" class="form-control"
+							id="exampleFormControlInput1" placeholder="작성자" required>
+					</div>
+
+					<div class="col-md-3 b">
+						<label for="exampleFormControlInput1" class="form-label"></label>
+						<input name="noticeTitle" type="text" class="form-control"
+							id="exampleFormControlInput1" placeholder="제목을 입력하세요" required>
+					</div>
+
+
+					<div class="mb-3 col-7 md-4 b">
+						<label for="exampleFormControlTextarea1" class="form-label"></label>
+						<textarea name="noticeCont" class="form-control"
+							id="exampleFormControlTextarea1" rows="5" placeholder="내용을 입력하세요"
+							required></textarea>
+					</div>
+
+
+					<button class="btn btn-outline-primary" style="float: reft">등록</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<%@include file="../Footer.jsp"%>

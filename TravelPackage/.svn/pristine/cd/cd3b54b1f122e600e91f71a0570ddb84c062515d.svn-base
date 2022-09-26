@@ -1,0 +1,54 @@
+package kr.or.ddit.app.sch.controller;
+
+import java.io.IOException; 
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.or.ddit.app.common.service.AtchFileServiceImpl;
+import kr.or.ddit.app.common.service.IAtchFileService;
+import kr.or.ddit.app.common.vo.AtchFileVO;
+import kr.or.ddit.app.sch.service.ISchService;
+import kr.or.ddit.app.sch.service.SchServiceImpl;
+import kr.or.ddit.app.sch.vo.SchVO;
+
+
+@WebServlet("/sch/schDetail.do")
+public class DetailSchController extends HttpServlet{
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		 String schId = req.getParameter("schId");
+	      
+	      // 1. 서비스 객체 생성하기
+	      ISchService schService = SchServiceImpl.getInstance();
+//	      SchVO sv = schService.getSch(schId);
+	      
+//	      IAtchFileService fileService = AtchFileServiceImpl.getInstance();
+//	      
+//	      if(sv.getAtchFileId() > 0) { // 첨부파일 존재
+//	    	  // 1-2. 첨부파일 정보 조회
+//	    	  AtchFileVO fileVO = new AtchFileVO();
+//	    	  fileVO.setAtchFileId(sv.getAtchFileId());
+//	    	  
+//	    	  List<AtchFileVO> atchFileList = 
+//	    			  fileService.getAtchFileList(fileVO);
+//	    	  
+//	    	  req.setAttribute("atchFileList", atchFileList);
+//	      }
+	      
+//	      req.setAttribute("sv", sv);
+	      
+	      req.getRequestDispatcher("/sch/schDetail.jsp").forward(req, resp);
+	      
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

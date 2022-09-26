@@ -1,0 +1,93 @@
+<%@page import="java.io.File"%>
+<%@page import="kr.or.ddit.app.common.vo.AtchFileVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.or.ddit.app.sch.vo.SchVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@include file="../Header.jsp" %>
+    <%
+	SchVO sv = (SchVO) request.getAttribute("sv");
+
+	List<AtchFileVO> atchFileList = 
+			(List<AtchFileVO>)request.getAttribute("atchFileList");
+%>
+    
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta charset="UTF-8">
+            <title>상세 정보</title>
+          
+        </head>
+
+        <body>
+            <div class="container">
+                <div class="row mt-4">
+                    <div id="category" class="col-2">
+                        <script src="../admin/category.js"></script>
+                    </div>
+
+                    <div class="col-9 offset-1">
+                      <table class="table table-hover">
+                      		<tr>
+								<td colspan=2>
+								<%
+								if(atchFileList != null){
+									for(AtchFileVO fileVO : atchFileList){
+								%>
+									<div class="text-center">
+										<img src="<%=request.getContextPath() + File.separator%>sch/<%= fileVO.getAtchFileDeSav()%>" width="60%">
+										<br>
+										<br>
+									</div> <% 
+									}
+								}
+								%>
+								</td>
+							</tr>
+							<tr>
+								<td>관광상품ID :</td>
+								<td><%=sv.getSchId()%></td>
+							</tr>
+							<tr>
+								<td>상품명 :</td>
+								<td><%=sv.getSchNm()%></td>
+							</tr>
+							<tr>
+								<td>구분 :</td>
+								<td><%=sv.getSchSe()%></td>
+							</tr>
+							<tr>
+								<td>주소 :</td>
+								<td><%=sv.getSchAddr()%></td>
+							</tr>
+							<tr>
+								<td>상품가격 :</td>
+								<td><%=sv.getSchPri()%></td>
+							</tr>
+							<tr>
+								<td>최대인원 :</td>
+								<td><%=sv.getSchMaxTo()%></td>
+							</tr>
+							<tr>
+								<td>등록수정일자 :</td>
+								<td><%=sv.getSchRd()%></td>
+							</tr>
+							<tr>
+								<td>작성자 :</td>
+								<td><%=sv.getSchWrt()%></td>
+							</tr>
+							
+							<tr>
+								<td colspan="2"><a href="schList.do">[목록]</a> <a
+									href="schUpdate.do?schId=<%=sv.getSchId()%>">[정보 수정]</a> <a
+									href="schDelete.do?schId=<%=sv.getSchId()%>">[정보 삭제]</a></td>
+							</tr>
+						</table>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+        </html>
+        <%@include file="../Footer.jsp" %>

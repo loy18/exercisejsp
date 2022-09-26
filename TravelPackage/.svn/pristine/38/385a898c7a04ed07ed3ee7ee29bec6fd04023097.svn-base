@@ -1,0 +1,62 @@
+package kr.or.ddit.app.schcomb.service;
+
+import java.util.List;
+
+import kr.or.ddit.app.schcomb.dao.ISchCombDAO;
+import kr.or.ddit.app.schcomb.dao.SchCombDAOImpl;
+import kr.or.ddit.app.schcomb.vo.SchCombVO;
+
+
+public class SchCombServiceImpl implements ISchCombService {
+	private static ISchCombService schCombService;
+	private ISchCombDAO schCombDao;
+	
+	private SchCombServiceImpl() {
+		schCombDao = SchCombDAOImpl.getInstance();
+	}
+	
+	public static ISchCombService getInstance() {
+		if(schCombService == null) {
+			schCombService = new SchCombServiceImpl();
+		}
+		return schCombService;
+	}
+
+	@Override
+	public int registerSchComb(SchCombVO sv) {
+		int cnt = schCombDao.insertSchComb(sv);
+		return cnt;
+	}
+
+	@Override
+	public int modifySchComb(SchCombVO sv) {
+		int cnt = schCombDao.updateSchComb(sv);
+		return cnt;
+	}
+
+	@Override
+	public int removeSchComb(String schCombId) {
+		int cnt = schCombDao.deleteSchComb(schCombId);
+		return cnt;
+	}
+
+	@Override
+	public SchCombVO getSchComb(String schCombId) {
+		SchCombVO trmv = schCombDao.getSchComb(schCombId);
+		return trmv;
+	}
+
+	@Override
+	public List<SchCombVO> getAllSchCombList() {
+		List<SchCombVO> SchCombList = schCombDao.getAllSchCombList();
+		return SchCombList;
+	}
+
+	@Override
+	public List<SchCombVO> searchList(SchCombVO sv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

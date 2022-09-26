@@ -1,0 +1,7 @@
+driver=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@112.220.114.130:1521:xe
+url=jdbc:oracle:thin:@192.168.142.15:1521:xe
+#username=team3_202206M
+username=TravelPackage
+password=java
+greeting=hello

@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@include file="../Header.jsp" %>
+    <%
+    	String pkgId = (String) request.getAttribute("pkgId");
+    %>
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta charset="UTF-8">
+            <title>관광상품 등록</title>
+          <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dropdowns/">
+          <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+          <link href="../css/dropdowns.css" rel="stylesheet">
+          <style>
+			.b{
+				border: 1px solid black;
+			}
+
+		  </style>
+        </head>
+
+        <body>
+            <div class="container">
+                <div class="row mt-4">
+                    <div id="category" class="col-2">
+                        <script src="../admin/category.js"></script>
+                    </div>
+
+                    <div class="col-9 offset-1">
+						<form action="schInsert.do" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="pkgId" value="<%=pkgId %>">
+							
+							<table class="table table-hover">
+								<tr>
+									<td>일차</td>
+									<td><input type="text" name="schDayInput" value=""></td>
+								</tr>
+								<tr>
+									<td>숙박업소</td>
+									<td id="acm">
+										 <input id="acmTxt" type="search" autocomplete="false" placeholder="검색어를 입력하세요." readonly="readonly">
+										 <input type="hidden" name="acmId">
+										 <button type="button" class="btn btn-primary" onclick="f_acmSearch()">검색</button>
+									</td>
+									<!-- <td><input type="text" name="acmId" value=""></td> -->
+								</tr>
+								<tr>
+									<td>교통수단</td>
+									<td id="vehc">
+									 	<input id="vehcTxt" type="search" autocomplete="false" placeholder="검색어를 입력하세요." readonly="readonly">
+									 	<input type="hidden" name="vehcId">
+										<button type="button" class="btn btn-primary" onclick="f_vehcSearch()">검색</button>
+									</td>
+								</tr>
+								 <tr>
+									<td>관광상품</td>
+									<td>
+										<input id="tourTxt" type="search" autocomplete="false" placeholder="검색어를 입력하세요." readonly="readonly">
+										<input type="hidden" name="tourId">
+										<button type="button" class="btn btn-primary" onclick="f_tourSearch()">검색</button>
+									</td>
+								</tr>
+							</table>
+							<input type="submit" value="일정등록">
+						</form>
+                    </div>
+                </div>
+            </div>
+             <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+             <script>
+				function f_acmSearch(){
+					window.open("../acm/AcmSearch.do","숙박업소선택","width=700, height=700, left=100, top=50");
+				}
+				function f_vehcSearch(){
+					window.open("../vehc/vehcList.do","교통수단선택","width=400, height=300, left=100, top=50");
+				}
+				function f_tourSearch(){
+					window.open("../tour/tourList.do","관광상품선택","width=400, height=300, left=100, top=50");
+				}
+             </script>
+        </body>
+
+        </html>
+        <%@include file="../Footer.jsp" %>

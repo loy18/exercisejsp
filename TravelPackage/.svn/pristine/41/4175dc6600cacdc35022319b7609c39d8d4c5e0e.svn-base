@@ -1,0 +1,27 @@
+package kr.or.ddit.app.pkg.dao;
+
+import java.util.List;
+
+import kr.or.ddit.app.pkg.vo.PkgVO;
+
+
+public interface IPkgDAO {
+	
+	// 등록
+	public int insertPkg(PkgVO pv);
+
+	// 수정
+	public int updatePkg(PkgVO pv);
+	
+	// 삭제
+	public int deletePkg(String pkgId);
+	
+	// 관광 정보 가져오기
+	public PkgVO getPkg(String pkgId);
+	
+	// 모든 리스트 
+	public List<PkgVO> getAllPkgList();
+	
+	// 검색 리스트
+	public List<PkgVO> searchPkgList(PkgVO pv);
+}

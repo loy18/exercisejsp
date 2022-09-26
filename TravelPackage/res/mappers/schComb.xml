@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="schComb">
+
+	<insert id="insertSchComb"
+		parameterType="schCombVO">
+		
+		INSERT INTO SCH_COMB(
+		SCH_DAY
+		,PKG_ID
+		,TOUR_ID
+		) VALUES(
+		 #{schDay}
+		,#{pkgId}
+		,#{tourId}
+		)
+		
+	</insert>
+
+	<select id="pkgTourList" resultType="schCombVO">
+		select SCH_DAY
+			, TOUR_ID
+		from SCH_COMB
+		where PKG_ID = #{pkgId}
+	</select>
+
+
+	<update id="update" parameterType="schCombVO">
+		UPDATE SCH_COMB
+		SET TOUR_ID = #{tourId}  
+		WHERE
+		PKG_ID = #{pkgId}
+		SCH_DAY = #{schDay}
+		TOUR_ID = #{tourId}
+	</update>
+
+
+	<delete id="delete" parameterType="schCombVO">
+		DELETE FROM SCH_COMB
+		WHERE PKG_ID = #{pkgId}
+		SCH_DAY = #{schDay}
+		TOUR_ID = #{tourId}
+	</delete>
+</mapper>

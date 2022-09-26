@@ -1,0 +1,141 @@
+<%@page import="kr.or.ddit.app.sch.vo.SchVO"%>
+<%@page import="kr.or.ddit.app.pkg.vo.PkgVO"%>
+<%@page import="java.io.File"%>
+<%@page import="kr.or.ddit.app.common.vo.AtchFileVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@include file="../Header.jsp" %>
+    <%
+    PkgVO pv = (PkgVO) request.getAttribute("pv");
+    List<SchVO> svList = (List<SchVO>)request.getAttribute("svList");
+	List<AtchFileVO> atchFileList = 
+			(List<AtchFileVO>)request.getAttribute("atchFileList");
+%>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>상세정보</title>
+        <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/dropdowns.css" rel="stylesheet">
+        </head>
+
+        <body>
+            <div class="container">
+                <div class="row mt-4">
+                    <div id="category" class="col-2">
+                        <script src="../admin/category.js"></script>
+                    </div>
+
+                    <div class="col-9 offset-1">
+                      <table class="table table-hover">
+                      		<tr>
+								<td colspan=2>
+								<%
+								if(atchFileList != null){
+									for(AtchFileVO fileVO : atchFileList){
+								%>
+									<div class="text-center">
+										<img src="<%=request.getContextPath() + File.separator%>pkg/<%= fileVO.getAtchFileDeSav()%>" width="60%">
+										<br>
+										<br>
+									</div> <% 
+									}
+								}
+								%>
+								</td>
+							</tr>
+							<tr>
+								<td>패키지ID :</td>
+								<td><%=pv.getPkgId()%></td>
+							</tr>
+							<tr>
+								<td>패키지명 :</td>
+								<td><%=pv.getPkgNm()%></td>
+							</tr>
+							<tr>
+								<td>일수 :</td>
+								<td><%=pv.getPkgDay()%></td>
+							</tr>
+							<tr>
+								<td>가격 :</td>
+								<td><%=pv.getPkgPri()%></td>
+							</tr>
+							<tr>
+								<td>지역 :</td>
+								<td><%=pv.getPkgReg()%></td>
+							</tr>
+							<tr>
+								<td>가이드여부 :</td>
+								<td><%=pv.getPkgGui()%></td>
+							</tr>
+							<tr>
+								<td>최소인원 :</td>
+								<td><%=pv.getPkgMinTo()%></td>
+							</tr>
+							<tr>
+								<td>최대인원 :</td>
+								<td><%=pv.getPkgMaxTo()%></td>
+							</tr>
+							<tr>
+								<td>등록수정일자 :</td>
+								<td><%=pv.getPkgRd()%></td>
+							</tr>
+							<tr>
+								<td>작성자 :</td>
+								<td><%=pv.getPkgWrt()%></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<h1 class="h4 mt-5">등록된 일정</h1>
+									<table class="table mt-3 mb-5">
+										<tr>
+											<th class="text_center">일차</th>
+											<th class="text_center">숙박업소</th>
+											<th class="text_center">교통수단</th>
+											<th class="text_center">관광상품수</th>
+										</tr>
+										
+										
+										<%
+										if(svList != null && svList.size() != 0){
+											for(SchVO sv : svList){
+										%>
+											<tr >
+												<td class="text_center"><%=sv.getSchDay() %></td>
+												<td ><%=sv.getAcmNm() %></td>
+												<td ><%=sv.getVehcNm() %></td>
+												<td ><%=sv.getTourCount() %></td>
+											</tr>
+											<% 
+											}
+										} else {
+										%>
+											<tr>
+												<td colspan="4" class="text-center">일정이 없습니다.</td>
+											</tr>
+										<%
+										}
+										%>
+										<tr>
+											<td colspan="4" class="text-end">
+												<a href="../sch/schInsert.do?pkgId=<%=pv.getPkgId() %>">[일정 추가]</a>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><a href="pkgList.do">[목록]</a> <a
+									href="pkgUpdate.do?pkgId=<%=pv.getPkgId()%>">[정보 수정]</a> <a
+									href="pkgDelete.do?pkgId=<%=pv.getPkgId()%>">[정보 삭제]</a></td>
+								<!-- <td>href="pkgDelete.do?pkgId=<%=pv.getPkgId()%>">[일정 추가]</a></td> -->
+							</tr>
+						</table>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+        </html>
+        <%@include file="../Footer.jsp" %>

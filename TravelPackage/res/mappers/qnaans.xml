@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qns">
+
+
+
+	<insert id="insertQns"
+		parameterType="kr.or.ddit.app.qnaans.vo.QnaAnsVO">
+		INSERT INTO QNA_ans(qna_ans_rd, qna_ans_title, qna_ans_cont, qna_ans_wrt, qna_ans_id)
+		VALUES(sysdate, #{qnaAnsTitle}, #{qnaAnsCont}, #{qnaAnsWrt}, #{qnaAnsId})
+	</insert>
+
+
+
+	<delete id="deleteQns" parameterType="String">
+		delete from qna where qna_ans_id = #{aaaaaa}
+	</delete>
+
+
+		<select id="getQns" parameterType="String" resultMap="qnsMap">
+		select *
+		from qna_ans
+		where qna_ans_id = #{qnaAnsId}
+	</select>
+	
+	<update id="updateQns">
+		update Qna_ans
+		set Qna_ans_rd = SYSDATE
+		, Qna_ans_TITLE = #{qnaAnsTitle}
+		, Qna_ans_CONT = #{qnaAnsCont}
+		, qna_ans_wrt = #{qnaAnsWrt} 
+		where qna_ans_id = #{qnaAnsId}
+	</update>
+	
+	<resultMap type="kr.or.ddit.app.qnaans.vo.QnaAnsVO" id="qnsMap">
+		<result property="qnaAnsId" column="qna_ans_id" />
+		<result property="qnaAnsRd" column="Qna_ans_rd" />
+		<result property="qnaAnsTitle" column="Qna_ans_TITLE" />
+		<result property="qnaAnsCont" column="Qna_ans_CONT" />
+		<result property="qnaAnsWrt" column="qna_ans_wrt" />
+	</resultMap>
+
+
+
+	
+	<select id="qnsList" resultMap="qnsMap">
+		select *
+		from qna_ans order by qna_ans_id desc
+	</select>
+
+
+
+
+<!-- 
+	<select id="searchList" parameterType="qnaAnsVO" resultType="qnaAnsVO">
+		select * from qna_ans
+		where 1=1
+		<if test="qnaAnsId != null and qnaAnsId != ''">
+			and qna_ans_id = #{qnaAnsId}
+		</if>
+		<if test="qnaAnsTitle != null and qnaAnsTitle != ''">
+			and Qna_ans_title = #{qnaAnsTitle}
+		</if>
+		<if test="qnaAnsCont != null and qnaAnsCont != ''">
+			and Qna_ans_CONT = #{qnaAnsCont}
+		</if>
+		<if test="qnaAnsWrt != null and qnaAnsWrt != ''">
+			and Qna_Ans_wrt = #{qnaAnsWrt}
+		</if>
+	</select>
+ -->
+</mapper>

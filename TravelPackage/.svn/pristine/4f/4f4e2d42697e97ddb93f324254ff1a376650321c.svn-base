@@ -1,0 +1,176 @@
+<!-- 지우고 IMPORT 삽입 -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<% MemberVO mv = (MemberVO) session.getAttribute("vo"); %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+            <div class="container">
+                <div class="row mt-4">
+                    <div id="category" class="col-2">
+                        <script src="../customer/category.js"></script>
+                    </div>
+
+                    <div class="col-9 offset-1">
+                      <form id="id1" action="<%=request.getContextPath()%>/index.jsp" method="post">
+                      <h2 align="center">회원정보수정</h2>
+						<table class="table table-hover">
+							
+							<tr>
+								<td>아이디 </td>
+								<td><input type="text" id="memMail" name="memMail" value="<%=(String)session.getAttribute("id")%>" readonly="readonly"></td>
+							</tr>
+							<tr>
+								<td>현재 비밀번호 </td>
+								<td><input type="password" id="prePw" name="prePw" value=""></td>
+							</tr>
+							<tr>
+								<td>새 비밀번호 </td>
+								<td><input type="password" id="newPw" name="newPw" value=""></td>
+							</tr>
+							<tr>
+								<td>새 비밀번호 확인 </td>
+								<td><input type="password" id="newPwCer" name="newPwCer" value=""></td>
+							</tr>
+							<tr>
+								<td>이름 </td>
+								<td><input type="text" id="memNm" name="memNm" value="<%=(String)session.getAttribute("name")%>"></td>
+							</tr>
+							<tr>
+								<td>전화번호 </td>
+								<td><input type="text" id="memTel" name="memTel" value="<%=(String)mv.getMemTel() %>"></td>
+							</tr>
+							<tr>
+								<td>주소 </td>
+								<td><input type="text" id="memAddr" name="memAddr" value="<%=(String)mv.getMemAddr() %>"></td>
+							</tr>
+							<tr>
+								<td>선호지역 </td>
+								<td><input type="text" id="memPreReg" name="memPreReg" value="<%=(String)mv.getMemPreReg() %>"></td>
+							</tr>
+							
+						  </table>
+						  <input id="btn" type="button" onclick="subBtn()" value="정보수정">
+						  <input id="but" type="button" style="float: right" onclick="cfBtn()" value="회원탈퇴">
+						</form>
+                    </div>
+                </div>
+            </div>
+            <script>
+            	let cerInfo = false;
+            	function subBtn() {
+            		if($("#prePw").val() == "" || $("#newPw").val() == "" || $("#newPwCer").val() == ""){
+		            	alert("비밀번호를 입력해주세요.");
+		            	
+		            	return cerInfo;
+            		}
+            		
+					$.ajax({
+						type:"get",
+						url:"<%=request.getContextPath()%>/infoIdPwCheck.do",
+						data:{
+							"memId": $("#memMail").val(),
+							"memPw": $("#prePw").val()
+						},
+						dataType:"text",
+						success:function(p_rslt){
+							if(p_rslt == "OK"){
+								let pw = $("#newPw").val();
+								let pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+								if(!pwdCheck.test(pw)){
+									alert("비밀번호는 영문자(대소문자 상관없음)+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+									return false;
+								}else{
+									$.ajax({
+										type:"post",
+										url:"<%=request.getContextPath()%>/changeMemInfo.do",
+										data: {
+											"memMail":$("#memMail").val(),
+											"newPw":$("#newPw").val(),
+											"memNm":$("#memNm").val(),
+											"memTel":$("#memTel").val(),
+											"memAddr":$("#memAddr").val(),
+											"memPreReg":$("#memPreReg").val()
+										},
+										dataType:"text",
+										success:function(p_rslts){
+											if(p_rslts == "OK"){
+												alert("개인정보 수정이 완료되었습니다.");
+												$("#id1").submit();	
+											}else{
+												alert("개인정보 수정이 불가합니다.");
+											}
+										},
+										error: function (request, status, error) {
+										console.log("code: " + request.status)
+										console.log("message: " + request.responseText)
+										console.log("error: " + error);
+							    		}
+									})
+									//$("#btn").attr("type","submit");								
+								}
+							}else{
+								alert("비밀번호가 일치하지 않습니다.");
+							}
+						},
+						error: function (request, status, error) {
+						console.log("code: " + request.status)
+						console.log("message: " + request.responseText)
+						console.log("error: " + error);
+		    			}
+					})
+            	
+
+					// $("#btn").attr("submit", true);
+
+				}
+            	
+            	
+            	
+            	function cfBtn() {
+	            	let memId = $("#memMail").val();
+					let removeMem = confirm("탈퇴 하시겠습니까?");
+					let ask = confirm("정말 탈퇴하시려면 확인 버튼을 누르세요.");
+					
+					if(removeMem == true){
+						if(ask == true){
+							
+							$.ajax({
+								type:"get",
+								url:"<%=request.getContextPath()%>/mem/delMem.do",
+								data:"memMail=" + memId,
+								dataType:"text",
+								success: function(result) {
+									if(result == "OK"){
+										alert("회원이 삭제되었습니다.");
+										location.href="<%=request.getContextPath()%>/remove.do";
+									}
+								},
+								error: function (request, status, error) {
+							        console.log("code: " + request.status)
+							        console.log("message: " + request.responseText)
+							        console.log("error: " + error);
+								}
+								
+							})
+						}else{
+							return false;
+						}
+					}else{
+						return false;
+					}
+					
+				}
+            </script>
+        </body>
+</html>
+<%@include file="../Footer.jsp"%>

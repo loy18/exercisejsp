@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prodPkg">
+
+	<insert id="insert"
+		parameterType="ppVO">
+		
+		INSERT INTO PROD_PKG(
+		PKG_ID
+		,TOUR_ID
+		) VALUES(
+		#{pkgId}
+		,#{tourId}
+		)
+		
+	</insert>
+
+	<select id="pkgTourList" resultType="String">
+		select TOUR_ID
+		from PROD_PKG
+		where PKG_ID = #{pkgId}
+	</select>
+
+
+	<update id="update" parameterType="ppVO">
+		UPDATE PROD_PKG
+		SET TOUR_ID = #{tourId}  
+		WHERE
+		PKG_ID = #{pkgId}
+		TOUR_ID = #{tourId}
+	</update>
+
+
+	<delete id="delete" parameterType="ppVO">
+		DELETE FROM PROD_PKG
+		WHERE PKG_ID = #{pkgId}
+		TOUR_ID = #{tourId}
+	</delete>
+</mapper>

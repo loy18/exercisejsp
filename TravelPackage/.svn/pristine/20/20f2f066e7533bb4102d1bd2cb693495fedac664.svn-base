@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comPkg">
+
+	<insert id="insertComPkg"
+		parameterType="comPkgVO">
+		
+		INSERT INTO COM_PKG(
+		COM_PKG_DAY
+		,COM_PKG_ID
+		,PKG_ID
+		,COM_PKG_RD
+		,COM_PKG_WRT
+		) VALUES(
+		#{comPkgDay}
+		,COM_PKG_SEQ.nextval
+		,#{pkgId}
+		,sysdate
+		,#{comPkgWrt}
+		)
+		
+	</insert>
+
+	<select id="comPkgList" resultType="comPkgVO">
+		SELECT
+		    TO_CHAR(COM_PKG_DAY,'YY-MM-DD') com_pkg_day,
+		    COM_PKG_ID,
+		    PKG_ID,
+		    TO_CHAR(COM_PKG_RD,'YY-MM-DD') COM_PKG_RD,
+		    COM_PKG_WRT,
+		    (
+		        SELECT
+		            NVL(COUNT(*),0)
+		        FROM
+		            RSV R
+		        WHERE
+		            R.COM_PKG_ID = CP.COM_PKG_ID
+		    )
+		    || '명/'
+		    || (
+		        SELECT
+		            PKG_MAX_TO
+		        FROM
+		            PKG P
+		        WHERE
+		            P.PKG_ID = CP.PKG_ID
+		    ) || '명' PKG_COUNT
+		FROM
+		    COM_PKG CP
+		WHERE
+		    PKG_ID = #{pkgId}
+	</select>
+
+
+
+	<delete id="delete" parameterType="comPkgVO">
+		DELETE FROM COM_PKG
+		WHERE COM_PKG_ID = #{comPkgId}
+	</delete>
+</mapper>

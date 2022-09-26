@@ -1,0 +1,55 @@
+<!-- 지우고 IMPORT 삽입 -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%>
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!-- 지우고 본문상단 삽입 -->
+<!DOCTYPE html>
+<html>
+<style>
+<style>
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+a:active {
+	color: green;
+	text-decoration: none;
+}
+.b {
+	border: 1px solid black;
+}
+</style>
+<head>
+<meta charset="UTF-8">
+<title>고객센터 관리</title>
+
+</head>
+
+<body>
+	<div class="container ">
+		<div class="row mt-4">
+			<div id="category" class="col-2">
+				<script src="../admin/category.js"></script>
+			</div>
+			<div class="col-9 offset-1 b">
+				<button onclick="location.href='../notice/noticeList.do';"
+					type="button" class="btn btn-outline-dark ">공지사항 관리</button>
+				<button onclick="location.href='../notice/noticeList.do';"
+					type="button" class="btn btn-outline-dark ">자주묻는질문 관리</button>
+				<button onclick="location.href='../notice/noticeList.do';"
+					type="button" class="btn btn-outline-dark ">1:1문의 관리</button>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+<%@include file="../Footer.jsp"%>

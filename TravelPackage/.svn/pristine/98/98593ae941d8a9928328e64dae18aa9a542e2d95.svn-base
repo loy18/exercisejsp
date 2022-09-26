@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+
+	<insert id="insertReview" parameterType="kr.or.ddit.app.review.vo.ReviewVO">
+		INSERT INTO REVIEW(REVIEW_ID, REVIEW_TITLE, REVIEW_DATE, REVIEW_CONT, REVIEW_RAT, MEM_MAIL, PKG_ID, ATCH_FILE_ID)
+		VALUES(REVIEW_SEQ.NEXTVAL, #{reviewTitle}, SYSDATE, #{reviewCont}, #{reviewRat}, #{memMail}, #{pkgId}, #{atchFileId})
+	</insert>
+
+	<delete id="deleteReview" parameterType="String">
+		DELETE FROM REVIEW
+		WHERE REVIEW_ID IN (#{aaaaaa})
+	</delete>
+	
+	<select id="getReview" parameterType="String" resultType="reviewVO">
+		SELECT *
+		FROM REVIEW
+		WHERE REVIEW_ID = #{reviewId}
+	</select>
+	
+	<select id="reviewList" resultType="reviewVO">
+		SELECT *
+		FROM REVIEW
+		ORDER BY REVIEW_ID DESC
+	</select>
+	
+	<select id="searchList" parameterType="String" resultType="reviewVO">
+		SELECT *
+		FROM REVIEW
+		WHERE MEM_MAIL = #{memMail}
+		ORDER BY REVIEW_ID DESC
+	</select>
+	<select id="pkgList" parameterType="String" resultType="reviewVO">
+		SELECT *
+		FROM REVIEW
+		WHERE PKG_ID = #{pkgId}
+		ORDER BY REVIEW_ID DESC
+	</select>
+	
+	<select id="reviewAvg" parameterType="String" resultType="reviewVO">
+		SELECT
+		    COUNT(*) REVIEW_COUNT,
+		    NVL(ROUND(AVG(REVIEW_RAT),1),0) REVIEW_RAT
+		FROM
+		    REVIEW
+		WHERE
+		    PKG_ID = #{pkgId}
+	</select>
+	
+</mapper>
